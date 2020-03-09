@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: 발로짜진 않았는데...
+title: 해보고나면 별거아니다
 email: isntyet@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   조재의 개발 노트입니다.
@@ -57,7 +57,7 @@ plugins:
 author:
   name   : "Jo JaeYoung"
   avatar : "/assets/images/profile.jpg"
-  bio    : "아직 많이 부족하다."
+  bio    : "열심히 하자."
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
