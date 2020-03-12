@@ -57,7 +57,7 @@ plugins:
 author:
   name   : "Jo JaeYoung"
   avatar : "/assets/images/profile.jpg"
-  bio    : "열심히 하자."
+  bio    : "일단 한번 해보기."
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
@@ -101,3 +101,9 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+
+comments:
+  provider: "disqus"
+  disqus:
+    shortname: "isntyet.github.io"  
