@@ -24,10 +24,7 @@ html {
 }
 
 hr {
-    border-top: 1px solid #E6889A;
+    border-top: 1px solid #bbbbbb;
 }
 
-
-.custom-img { background-color: #333333; color: #666666; border: 1px solid #850000; }
-
-@media (min-width: 64em) { .custom-img { background-color: #333333; color: #666666; border: 1px solid #850000; } }
+.img-figure { margin: 3px 3px 3px 3px; box-shadow: 2px 3px 3px 3px #000;}

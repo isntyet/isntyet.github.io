@@ -42,7 +42,7 @@ public class TestController {
 ```  
 
 * 실행 후 확인
- ![web확인](https://drive.google.com/uc?id=1Dm2Sn-nyBQuInbcnVea0KNP0LIOMRDNd){: .custom-img}  
+ ![web확인](https://drive.google.com/uc?id=1Dm2Sn-nyBQuInbcnVea0KNP0LIOMRDNd)  
 
 -----
 
@@ -149,7 +149,7 @@ aws cli credentials 하는 과정인데
 deploy할때 불러올 수 있다.
 
 * github 해당 `repository`->`Setting`->`Secrets` 에서 key, value를 추가하면 사용가능
- ![secret var 추가](https://drive.google.com/uc?id=1p0oF4quWHEusKBU0obqCv8a5FnhjY54m){: .custom-img}  
+ ![secret var 추가](https://drive.google.com/uc?id=1p0oF4quWHEusKBU0obqCv8a5FnhjY54m)  
 
 이전 포스팅에서 만들어서 저장해놓았던  
 cli용 IAM user의 `access-key`와 `secret-access-key`를
@@ -161,7 +161,7 @@ AWS_REGION 에는 ap-northeast-2
 각 항목에 맞게 저장해놓으면 된다.
 
 * 저장 후 확인
-![secret var 추가](https://drive.google.com/uc?id=1jwrPOOEPzT3xv5b8ymnO9VLgYBpamgIA){: .custom-img}  
+![secret var 추가](https://drive.google.com/uc?id=1jwrPOOEPzT3xv5b8ymnO9VLgYBpamgIA)  
 
 
 ```yaml
@@ -259,7 +259,7 @@ nohup java -jar $JAR_PATH > /dev/null 2> /dev/null < /dev/null &
 
 
 * github action 성공
-![github action 성공](https://drive.google.com/uc?id=11mcPcaSgemRvsmSX3HOizmlpVewKuQ2T){: .custom-img}  
+![github action 성공](https://drive.google.com/uc?id=11mcPcaSgemRvsmSX3HOizmlpVewKuQ2T)  
 
 이렇게 통과되면 s3까지 파일이 올라갔고 codedeploy에 배포하나가 생긴 상태이다.
 (실패가 발생했다면 이전 설정중 빠진것이 없는지 되돌아보자)  
@@ -269,13 +269,13 @@ nohup java -jar $JAR_PATH > /dev/null 2> /dev/null < /dev/null &
 
 
 * CodeDeploy 배포 확인
-![CodeDeploy 배포 확인](https://drive.google.com/uc?id=1QSIfa9kXmq32Dr9W_F9SonuSFLiV7QzU){: .custom-img}  
+![CodeDeploy 배포 확인](https://drive.google.com/uc?id=1QSIfa9kXmq32Dr9W_F9SonuSFLiV7QzU)  
 
 * 해당 배포의 `View Events` 클릭
-![CodeDeploy 배포 확인](https://drive.google.com/uc?id=1QJWpKkZBeG_-cR74JsBnjt8kfiyF8Lo6){: .custom-img}  
+![CodeDeploy 배포 확인](https://drive.google.com/uc?id=1QJWpKkZBeG_-cR74JsBnjt8kfiyF8Lo6)  
 
 * 이벤트들 확인
-![CodeDeploy 배포 확인2](https://drive.google.com/uc?id=10d4Bk3Be74xb_K3cxeASBrmvc07AIrkO){: .custom-img}
+![CodeDeploy 배포 확인2](https://drive.google.com/uc?id=10d4Bk3Be74xb_K3cxeASBrmvc07AIrkO)
 
 마찬가지로 CodeDeploy 에서 실패가 있다면
 CodeDeploy agent에 문제가 있거나 (sudo service codedeploy-agent restart 해보자)  
@@ -293,7 +293,7 @@ EC2에 접속해서 jar가 정상적으로 실행되었는지도 확인해보자
 http://ip:8080/test
 
 * 이벤트들 확인
-![접속 확인](https://drive.google.com/uc?id=1sZyHX8CWBOBdPdOaL6NXBREbNPV37wJZ){: .custom-img}
+![접속 확인](https://drive.google.com/uc?id=1sZyHX8CWBOBdPdOaL6NXBREbNPV37wJZ)
 
 
 만약 접속안된다면 8080 보안그룹을 열려있는지 확인해보자.

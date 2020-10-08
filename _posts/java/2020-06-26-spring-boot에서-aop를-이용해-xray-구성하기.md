@@ -282,7 +282,7 @@ public class XrayController {
 
 aws의 x-ray 서비스 콘솔의 트레이스 메뉴로 가보면
 
-![콘솔 확인](https://drive.google.com/uc?id=1eKLTkB0FfVRHwK1APisfdtQVGMvxeDb5){: .custom-img}
+![콘솔 확인](https://drive.google.com/uc?id=1eKLTkB0FfVRHwK1APisfdtQVGMvxeDb5)
 
 위와 같이 트레이싱 되어 url, 평균응답시간, 트레이스 비율 등을 볼 수 있다.  
 콘솔 세부 설정은 다음에...  

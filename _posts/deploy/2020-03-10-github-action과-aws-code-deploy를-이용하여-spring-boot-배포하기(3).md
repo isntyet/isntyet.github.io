@@ -32,16 +32,16 @@ CodeDeploy IAM이 필요하다.
 IAM 설정에 가서 만들어보자.
 
   * `IAM`->`CodeDeploy` 선택
-   ![CodeDeploy iam 설정1](https://drive.google.com/uc?id=1X7TnNVClic7wI2bU9YmcuGo3n2_BJ82H){: .custom-img}  
+   ![CodeDeploy iam 설정1](https://drive.google.com/uc?id=1X7TnNVClic7wI2bU9YmcuGo3n2_BJ82H)  
 
   * 선택되어 있는 `CodeDeployRole`그대로 두고 진행
-   ![CodeDeploy iam 설정2](https://drive.google.com/uc?id=163rQxde67l-gLznDXNbgFO4pmq4Kh-lg){: .custom-img}  
+   ![CodeDeploy iam 설정2](https://drive.google.com/uc?id=163rQxde67l-gLznDXNbgFO4pmq4Kh-lg)  
 
   * 역할만들기
-   ![CodeDeploy iam 설정3](https://drive.google.com/uc?id=1wavUQv8Ca9p6NLDpjBZbpTbhYRzj_VdK){: .custom-img}  
+   ![CodeDeploy iam 설정3](https://drive.google.com/uc?id=1wavUQv8Ca9p6NLDpjBZbpTbhYRzj_VdK)  
 
   * 생성확인
-   ![CodeDeploy iam 설정4](https://drive.google.com/uc?id=1bk7Rz2S7Lo9D3MnYIqCRrZ8fnzCgC9GC){: .custom-img}  
+   ![CodeDeploy iam 설정4](https://drive.google.com/uc?id=1bk7Rz2S7Lo9D3MnYIqCRrZ8fnzCgC9GC)  
 
 여기까지 하면 IAM 설정이 끝난다.
 
@@ -53,22 +53,22 @@ IAM 설정에 가서 만들어보자.
 
 
 * `CodeDeploy`->`어플리케이션 생성` (여기선 'testapp' 이름으로 생성)
- ![CodeDeploy 설정1](https://drive.google.com/uc?id=13N9FjbqTOO8IEsvndKCY1chvkSjjXI8O){: .custom-img}  
+ ![CodeDeploy 설정1](https://drive.google.com/uc?id=13N9FjbqTOO8IEsvndKCY1chvkSjjXI8O)  
 
 * `배포 그룹 생성` 선택 (예를들어 stage, product 처럼 배포 목적 에따라 구분이 가능하다)
- ![CodeDeploy 설정2](https://drive.google.com/uc?id=1fNg7cIyrE4KgQAxbxolJB3x9B2QFPU5D){: .custom-img}  
+ ![CodeDeploy 설정2](https://drive.google.com/uc?id=1fNg7cIyrE4KgQAxbxolJB3x9B2QFPU5D)  
 
 * 배포그룹 이름과 서비스 역할을 설정 (이전 단계에서 만들어놓은 IAM으로 설정)
- ![CodeDeploy 설정3](https://drive.google.com/uc?id=1O976Zx13kHUDFQuKtEgG0J8SuUSrJjFM){: .custom-img}  
+ ![CodeDeploy 설정3](https://drive.google.com/uc?id=1O976Zx13kHUDFQuKtEgG0J8SuUSrJjFM)  
 
 * 어플리케이션 배포방법, 환경 설정  
- ![CodeDeploy 설정4](https://drive.google.com/uc?id=1Mc2-gj76MAUCvBeKLbmeKYe6cD0D-Gpe){: .custom-img}
+ ![CodeDeploy 설정4](https://drive.google.com/uc?id=1Mc2-gj76MAUCvBeKLbmeKYe6cD0D-Gpe)
 `배포방법`은 현재위치방식과 블루그린 방식이 있는데 `무중단배포`를 원하면 `블루그린`으로 해야한다.  
 `환경구성`은 어느곳에 배포할 것인지, 배포대상 그룹을 선택하는 것인데  
 미리 만들어놓은 EC2가 있으니 Name태그를 이용해 대상을 설정.  
 
 * 배포, 로드밸런서 설정
- ![CodeDeploy 설정5](https://drive.google.com/uc?id=1zJKgfanYvwhtmVabEvPOpe-3C5IZ6uTl){: .custom-img}  
+ ![CodeDeploy 설정5](https://drive.google.com/uc?id=1zJKgfanYvwhtmVabEvPOpe-3C5IZ6uTl)  
  `배포설정`은 해당 링크를 참조하자 [배포설정들](https://docs.aws.amazon.com/ko_kr/codedeploy/latest/userguide/deployment-configurations.html)
  `로드밸런서`는 현재 EC2에는 설정안했으니 스킵한다.  
  (배포대상이 Autoscaling 그룹이고 로드밸런서가 물려있을때 설정하면
@@ -84,10 +84,11 @@ IAM 설정에 가서 만들어보자.
 CodeDeploy를 이용해 배포를 하려면 S3를 통하게된다.  
 프로젝트를 zip으로 압축 후 S3에 업로드하고  
 CodeDeploy 해당 파일경로를 이용해 배포대상에 소스를 옮긴다.  
-그렇기 떄문에 배포용 S3가 필요하다.
+그렇기 떄문에 배포용 S3가 필요하다.  
 
 * S3 생성
- ![S3 생성](https://drive.google.com/uc?id=1E2CqYb3R4w1-EnH_i07oPrFs54C7XBSl){: .custom-img}  
+  ![S3 생성](https://drive.google.com/uc?id=1E2CqYb3R4w1-EnH_i07oPrFs54C7XBSl)  
+
 
 -----
 
@@ -98,22 +99,22 @@ CodeDeploy 해당 파일경로를 이용해 배포대상에 소스를 옮긴다.
 미리 생성해보자.
 
 * `IAM`-> `사용자 추가` 선택
- ![cli iam 설정1](https://drive.google.com/uc?id=1K7jfBbCccWu0gYh3gn_7ta4FJh4fRXKv){: .custom-img}  
+ ![cli iam 설정1](https://drive.google.com/uc?id=1K7jfBbCccWu0gYh3gn_7ta4FJh4fRXKv)  
 
 * 이름, access 유형 설정
- ![cli iam 설정2](https://drive.google.com/uc?id=1rSoVQHe2p78IpIpPCHJBEfjvOUuO81bv){: .custom-img}  
+ ![cli iam 설정2](https://drive.google.com/uc?id=1rSoVQHe2p78IpIpPCHJBEfjvOUuO81bv)  
 
 * 기존정책 직접연결에서 S3FullAccess 선택
- ![cli iam 설정3](https://drive.google.com/uc?id=1wK2dIH1zpGtLD7csI2huM2XRcaU0UhWR){: .custom-img}  
+ ![cli iam 설정3](https://drive.google.com/uc?id=1wK2dIH1zpGtLD7csI2huM2XRcaU0UhWR)  
 
 * 기존정책 직접연결에서 CodeDeployFullAccess 선택
- ![cli iam 설정4](https://drive.google.com/uc?id=1Rd9_6f8u2Uo4Jj2n_q42j0aDKtd5y7U-){: .custom-img}  
+ ![cli iam 설정4](https://drive.google.com/uc?id=1Rd9_6f8u2Uo4Jj2n_q42j0aDKtd5y7U-)  
 
 * 확인
- ![cli iam 설정5](https://drive.google.com/uc?id=1noSElOp-XRL95rO9pLtBmMsSXtsihfIV){: .custom-img}  
+ ![cli iam 설정5](https://drive.google.com/uc?id=1noSElOp-XRL95rO9pLtBmMsSXtsihfIV)  
 
- * 만들어지면 `accees-key`와 `secret-access-key`가 생기는데 이걸 꼭 저장해놓자!!!
-  ![cli iam 설정5](https://drive.google.com/uc?id=10kxHllF9fiW4ea3TJnQGa3Eh39XxwhUM){: .custom-img}   
+* 만들어지면 `accees-key`와 `secret-access-key`가 생기는데 이걸 꼭 저장해놓자!!!
+ ![cli iam 설정5](https://drive.google.com/uc?id=10kxHllF9fiW4ea3TJnQGa3Eh39XxwhUM)   
 
 
 
