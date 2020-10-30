@@ -171,63 +171,63 @@ TracingFilter 에서는 AWSXRayServletFilter를 통해서 세그먼트 이름을
 
 aop를 활용하면 특별한 로직을 추가하지 않아도 쉽게 설정할 수 있다.  
 
-[Spring의 AOP 및 X-Ray SDK for Java](https://docs.aws.amazon.com/ko_kr/xray/latest/devguide/xray-sdk-java-aop-spring.html)
+* [Spring의 AOP 및 X-Ray SDK for Java](https://docs.aws.amazon.com/ko_kr/xray/latest/devguide/xray-sdk-java-aop-spring.html)
 
-```java
-@SpringBootApplication
-@EnableAspectJAutoProxy
-public class XrayApplication {
+* aop 활성화
+  ```java
+  @SpringBootApplication
+  @EnableAspectJAutoProxy
+  public class XrayApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(XrayApplication.class, args);
-	}
+  	public static void main(String[] args) {
+  		SpringApplication.run(XrayApplication.class, args);
+  	}
+  }
+  ```
+  aop를 활성화 해주고
 
-}
-```
+* XrayInspector
+  ```java
+  package com.isntyet.test.aws.xray.interceptor;
 
-aop를 활성화 해주고
+  import com.amazonaws.xray.entities.Subsegment;
+  import com.amazonaws.xray.spring.aop.AbstractXRayInterceptor;
+  import org.aspectj.lang.ProceedingJoinPoint;
+  import org.aspectj.lang.annotation.Aspect;
+  import org.aspectj.lang.annotation.Pointcut;
+  import org.springframework.stereotype.Component;
 
-```java
-package com.isntyet.test.aws.xray.interceptor;
+  import java.util.Map;
 
-import com.amazonaws.xray.entities.Subsegment;
-import com.amazonaws.xray.spring.aop.AbstractXRayInterceptor;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.stereotype.Component;
+  @Aspect
+  @Component
+  public class XrayInspector extends AbstractXRayInterceptor {
+      @Override
+      protected Map<String, Map<String, Object>> generateMetadata(ProceedingJoinPoint proceedingJoinPoint, Subsegment subsegment) {
+          return super.generateMetadata(proceedingJoinPoint, subsegment);
+      }
 
-import java.util.Map;
+      @Override
+      @Pointcut("@within(com.amazonaws.xray.spring.aop.XRayEnabled) && bean(*Controller)")
+      public void xrayEnabledClasses() {
+      }
+  }
+  ```
 
-@Aspect
-@Component
-public class XrayInspector extends AbstractXRayInterceptor {
-    @Override
-    protected Map<String, Map<String, Object>> generateMetadata(ProceedingJoinPoint proceedingJoinPoint, Subsegment subsegment) {
-        return super.generateMetadata(proceedingJoinPoint, subsegment);
-    }
+  AbstractXRayInterceptor 를 상속받은 XrayInspector를 구현해준다.
 
-    @Override
-    @Pointcut("@within(com.amazonaws.xray.spring.aop.XRayEnabled) && bean(*Controller)")
-    public void xrayEnabledClasses() {
-    }
-}
-```
+  xrayEnabledClasses 포인트컷에서 설정한 것 처럼 XRayEnabled 설정된 Controller bean이 래핑되어 해당 컨트롤러에서 추적이 될것이다.
 
-AbstractXRayInterceptor 를 상속받은 XrayInspector를 구현해준다.
+  이전에 datasource 설정이 필요하다고 했는데 이유는
+  AbstractXRayInterceptor 를 들어가보면
 
-xrayEnabledClasses 포인트컷에서 설정한 것 처럼 XRayEnabled 설정된 Controller bean이 래핑되어 해당 컨트롤러에서 추적이 될것이다.
+  ```java
+  @Pointcut("execution(public !void org.springframework.data.repository.Repository+.*(..))")
+  protected void springRepositories() {
+  }
+  ```
 
-이전에 datasource 설정이 필요하다고 했는데 이유는
-AbstractXRayInterceptor 를 들어가보면
-
-```java
-    @Pointcut("execution(public !void org.springframework.data.repository.Repository+.*(..))")
-    protected void springRepositories() {
-    }
-```
-
-부분에서 data repository 가 포인트컷에 들어가 있기 때문에 datasource 설정을 해주지 않으면 실행이 되지 않는다ㅡㅡ;;
+  부분에서 data repository 가 포인트컷에 들어가 있기 때문에 datasource 설정을 해주지 않으면 실행이 되지 않는다ㅡㅡ;;
 
 ---
 
@@ -235,7 +235,8 @@ AbstractXRayInterceptor 를 들어가보면
 
 이제 테스트로 호출해 볼 api가 필요하니 controller를 구성해보자.
 
-```java
+* XrayController
+  ```java
 @RestController
 @XRayEnabled
 public class XrayController {
@@ -269,7 +270,8 @@ public class XrayController {
 
 이제 준비가 끝났으니 만들어진 api를 호출해보면 이전에 실행해놓은 데몬에 로그가 찍힐것이다.
 
-```bash
+* 데몬 로그
+  ```bash
 [Info] 1296 segment buffers allocated
 [Info] Using region: ap-northeast-2
 [Info] HTTP Proxy server using X-Ray Endpoint : https://xray.ap-northeast-2.amazonaws.com
@@ -278,14 +280,14 @@ public class XrayController {
 [Info] Successfully sent batch of 1 segments (0.027 seconds)
 ```
 
-이렇게 'Successfully' 라고 뜨면 성공한것이다.
+  이렇게 'Successfully' 라고 뜨면 성공한것이다.
 
-aws의 x-ray 서비스 콘솔의 트레이스 메뉴로 가보면
+* aws의 x-ray 서비스 콘솔의 트레이스 메뉴
+  ![콘솔 확인](https://drive.google.com/uc?id=1eKLTkB0FfVRHwK1APisfdtQVGMvxeDb5)
 
-![콘솔 확인](https://drive.google.com/uc?id=1eKLTkB0FfVRHwK1APisfdtQVGMvxeDb5)
+  위와 같이 트레이싱 되어 url, 평균응답시간, 트레이스 비율 등을 볼 수 있다.  
 
-위와 같이 트레이싱 되어 url, 평균응답시간, 트레이스 비율 등을 볼 수 있다.  
-콘솔 세부 설정은 다음에...  
+#### 콘솔 세부 설정은 다음에...  
 
 -----
 ## 끝.
