@@ -1,5 +1,6 @@
 ### Home
- *** https://isntyet.github.io/ ***
+
+* https://isntyet.github.io/
 
 ------
 
