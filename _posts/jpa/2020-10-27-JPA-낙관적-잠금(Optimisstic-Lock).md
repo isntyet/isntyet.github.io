@@ -218,9 +218,14 @@ version 값을 이용해 변경감지를 한다.
 
 * 적용  
   ```java
-  @Transactional
-  @Lock(value = LockModeType.OPTIMISTIC_FORCE_INCREMENT) //여기
-  public int decreaseMoney(String name, int money)
+  public interface HumanRepository extends JpaRepository<Human, Integer> {
+
+      Human findByName(String name);
+
+      @Lock(LockModeType.PESSIMISTIC_WRITE) //여기
+      @Query("select h from Human h where h.name = :name")
+      Human findWithNameForUpdate(@Param("name") String name);
+  }
 ```
 
 * LockModeType.NONE  
