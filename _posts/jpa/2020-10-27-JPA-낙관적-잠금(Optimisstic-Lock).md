@@ -222,7 +222,7 @@ version 값을 이용해 변경감지를 한다.
 
       Human findByName(String name);
 
-      @Lock(LockModeType.PESSIMISTIC_WRITE) //여기
+      @Lock(LockModeType.OPTIMISTIC) //여기
       @Query("select h from Human h where h.name = :name")
       Human findWithNameForUpdate(@Param("name") String name);
   }

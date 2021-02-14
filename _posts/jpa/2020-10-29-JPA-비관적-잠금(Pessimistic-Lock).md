@@ -128,7 +128,7 @@ curl 'http://localhost:8080/home/decrease?name=%ED%95%9C%EC%98%A5&price=1000' & 
  ![콘솔 로그 보기](https://drive.google.com/uc?id=199JPs8WkRlD8hkDvMGkPP_h7mvP_Dmua)  
  ![디비 보기](https://drive.google.com/uc?id=1pgBCvpPjNEOpKux_tA0qExk-UT3iUpkk)  
  처음 `한옥`의 값은 `20000원`을 가지고 있었다.  
- 다섯번을 호출했으니 5천원이 남아있어야 되지만 남은돈은 `19000원`이다.  
+ 다섯번을 호출했으니 15000천원이 남아있어야 되지만 남은돈은 `19000원`이다.  
  모든 트랜잭션이 동시에 20000원을 읽어서 1000을 뺐기때문에,  
  다 19000원으로 업데이트 된것이다.
 
