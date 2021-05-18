@@ -6,4 +6,4 @@
 
 ### Jekyll theme
 
-* Minimal Mistakes
+* Minimal Mistakes 
