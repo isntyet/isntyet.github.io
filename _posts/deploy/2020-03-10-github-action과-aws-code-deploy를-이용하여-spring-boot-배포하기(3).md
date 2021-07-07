@@ -32,7 +32,7 @@ CodeDeploy IAM이 필요하다.
 IAM 설정에 가서 만들어보자.
 
   * `IAM`->`CodeDeploy` 선택
-   ![CodeDeploy iam 설정1](https://drive.google.com/uc?id=1X7TnNVClic7wI2bU9YmcuGo3n2_BJ82H)  
+   ![CodeDeploy iam 설정1](https://drive.google.com/uc?id=1qmSB7-iQi5ZDgf2esio4HPFKNRu5F2Y5)  
 
   * 선택되어 있는 `CodeDeployRole`그대로 두고 진행
    ![CodeDeploy iam 설정2](https://drive.google.com/uc?id=163rQxde67l-gLznDXNbgFO4pmq4Kh-lg)  
