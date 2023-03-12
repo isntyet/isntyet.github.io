@@ -56,7 +56,7 @@ plugins:
 
 author:
   name   : "Jo JaeYoung"
-  avatar : "/assets/images/profile.jpg"
+  avatar : "/assets/images/profile/profile.jpg"
   bio    : "일단 한번 해보기."
   links:
     - label: "GitHub"

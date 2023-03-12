@@ -17,4 +17,5 @@ title: "About"
 
 ### 기타
 
-* [AWS Certified Developer - Associate](https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2019-12-05&ci=AWS01174376)
+- AWS Certified Developer - Associate  
+  ![aws associate certificate](/assets/images/profile/aws associate certificate.png)
