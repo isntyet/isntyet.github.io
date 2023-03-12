@@ -215,7 +215,7 @@ comments: true
 
 
 즉시 다운로드 되는 버전의 Response Header를 보면 Transfer-Encoding가 chunked고  
-안되는 버전은 Transfer-Encoding이 없는 대신에 Content-Lengt가 있다
+안되는 버전은 Transfer-Encoding이 없는 대신에 Content-Length가 있다
 
 안되는 버전에서 코드를 소거해보면서 확인한 결과 안되는 버전에서만 있던 아래 코드가 문제였다
 
@@ -282,7 +282,8 @@ Request와 Response 로깅을 위해 캐싱하려고 만든 RequestFilter가 문
         response.setHeader("Content-Disposition", "attachment; filename=" + fileNameUtf8 + ".xlsx");
     
     //  try (OutputStream os = response.getOutputStream()) { // 기존 코드
-    		try (OutputStream os = ((ContentCachingResponseWrapper) response).getResponse().getOutputStream()) { // 새로운 코드
+    // 아래는 새로운 코드
+        try (OutputStream os = ((ContentCachingResponseWrapper) response).getResponse().getOutputStream()) { 
             this.homeService.excelDownload(os, filter);
         } catch (IOException e) {
             log.error("error {}", e.getMessage());
@@ -294,7 +295,8 @@ Request와 Response 로깅을 위해 캐싱하려고 만든 RequestFilter가 문
 나 같이 ContentCachingResponseWrapper를 사용하는 곳에서만 사용하도록 주의하자  
 (casting 에러 나니까)
 
-위와 같이 즉시 다운로드 진행이 되지 않는다면 중간에 response를 조작하는 코드가 없는지 확인하도록 하자
+위와 같이 즉시 다운로드 진행이 되지 않는다면  
+중간에 response를 조작하는 코드가 없는지 확인하도록 하자
 
 ---
 
