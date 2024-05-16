@@ -35,11 +35,11 @@ ec2에 접속해서 git에서 프로젝트를 내려받은뒤 빌드를 하고 �
 ### 프로젝트에 Workflow YML파일 만들기
 
 * 프로젝트의 github repository의 Actions에서 `set up a workflow yourself` 를 클릭  
- ![workflow yml 만들기](https://drive.google.com/uc?id=1vFltY65YuZcm2kt60Q5VjD23NGTlwxc5)  
+ ![workflow yml 만들기](/assets/images/github action과 aws code deploy를 이용하여 spring boot 배포하기/1/yml파일 만들기-1.png)  
 
 
 * yml 이름을 정하고 파일을 작성한 후 commit, push 하기  
- ![workflow yml 만들기2](https://drive.google.com/uc?id=1b3aUUt8pNxDW99ACsFzKGNCFhsT4PNI4)  
+ ![workflow yml 만들기2](/assets/images/github action과 aws code deploy를 이용하여 spring boot 배포하기/1/yml파일 만들기-2.png)  
 
 
 해당 yml 파일은 action에서 실행할 job들을 정의하는 것인데 일단은 build 하는것 까지만 정의를 해보자.  
@@ -80,10 +80,10 @@ jobs:
 이렇게 yml을 채워주고 (추후 내용을 더 추가) 푸시를 해보자.
 
 * push후 Actions에서 아래와 같이 workflow가 생성되며 step을 진행하는 것을 확인 가능   
-  ![workflow 돌려보기](https://drive.google.com/uc?id=1kVSyaENo-2xEfB7NWFgObE8gf6-GNhU1)
+  ![workflow 돌려보기](/assets/images/github action과 aws code deploy를 이용하여 spring boot 배포하기/1/워크플로우 돌려보기.png)
 
 * 왠만하면 아래와 같이 해당 workflow는 성공
-  ![workflow 돌려보기](https://drive.google.com/uc?id=1t8ON0LY2avof6lBjP317DWckMltbvSwP)  
+  ![workflow 돌려보기](/assets/images/github action과 aws code deploy를 이용하여 spring boot 배포하기/1/워크플로우 돌려보기-2.png)  
 
 
 대략 이런 방식으로 step들을 추가해 가며 진행해보자.
