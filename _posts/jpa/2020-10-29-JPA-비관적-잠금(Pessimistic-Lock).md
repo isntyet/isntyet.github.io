@@ -122,11 +122,11 @@ public class HomeController {
 ```bash
 curl 'http://localhost:8080/home/decrease?name=%ED%95%9C%EC%98%A5&price=1000' & curl 'http://localhost:8080/home/decrease?name=%ED%95%9C%EC%98%A5&price=1000' & curl 'http://localhost:8080/home/decrease?name=%ED%95%9C%EC%98%A5&price=1000' & curl 'http://localhost:8080/home/decrease?name=%ED%95%9C%EC%98%A5&price=1000' & curl 'http://localhost:8080/home/decrease?name=%ED%95%9C%EC%98%A5&price=1000'
 ```
- ![터미널에서 호출해보기](https://drive.google.com/uc?id=1pEe395tMsPm8nJA1aH_HhYBuE92-WPAZ)  
+ ![터미널에서 호출해보기](/assets/images/JPA 비관적 잠금(Pessimistic Lock)/0.png)  
 
  * 실행 결과
- ![콘솔 로그 보기](https://drive.google.com/uc?id=199JPs8WkRlD8hkDvMGkPP_h7mvP_Dmua)  
- ![디비 보기](https://drive.google.com/uc?id=1pgBCvpPjNEOpKux_tA0qExk-UT3iUpkk)  
+ ![콘솔 로그 보기](/assets/images/JPA 비관적 잠금(Pessimistic Lock)/1.png)  
+ ![디비 보기](/assets/images/JPA 비관적 잠금(Pessimistic Lock)/2.png)  
  처음 `한옥`의 값은 `20000원`을 가지고 있었다.  
  다섯번을 호출했으니 15000천원이 남아있어야 되지만 남은돈은 `19000원`이다.  
  모든 트랜잭션이 동시에 20000원을 읽어서 1000을 뺐기때문에,  
@@ -178,7 +178,7 @@ public class HomeService {
 ```
 
 * 위에 했던 curl테스트 다시 진행 후의 콘솔로그
-![콘솔 로그 보기](https://drive.google.com/uc?id=1bFX_CS9MgjCNDDEscsCMpyKtcKlsEpro)  
+![콘솔 로그 보기](/assets/images/JPA 비관적 잠금(Pessimistic Lock)/3.png)  
 결과를 보면 5번을 시도하여 낙관적 락 일때와는 다르게 전부 순차적으로 가격이 차감된것을 확인 할 수 있다.
 
 * 이유  
@@ -203,13 +203,6 @@ public class HomeService {
 
 ### LockMode 종류
 
-* 적용방법  
-  ```java
-  @Transactional
-  @Lock(value = LockModeType.PESSIMISTIC_WRITE) //여기
-  public int decreasePrice(String name, int price)
-```
-
 * LockModeType.PESSIMISTIC_WRITE  
   일반적인 옵션. 데이터베이스에 쓰기 락  
   다른 트랜잭션에서 읽기도 쓰기도 못함. (배타적 잠금)
@@ -226,38 +219,50 @@ public class HomeService {
 
 ### 테스트 코드 작성  
 
-* HumanServiceTest
+* HomeServiceTest
   ```java
-@SpringBootTest
-class HumanServiceTest {
+  @SpringBootTest
+  class HomeServiceTest {
     @Autowired
-    HumanService humanService;
+    HomeService homeService;
+
+    @Autowired
+    HomeRepository homeRepository;
+
+    @BeforeEach
+    void beforeEach() {
+        Home home = Home.builder()
+                .name("양옥")
+                .address("address")
+                .price(20000)
+                .build();
+
+        homeRepository.save(home);
+    }
 
     @Test
-    @DisplayName("돈 줄여보기(멀티 스레드) 테스트")
-    void decreaseMoneyForMultiThreadTest() throws InterruptedException {
+    @DisplayName("가격 줄여보기(멀티 스레드) 테스트")
+    void decreasePriceForMultiThreadTest() throws InterruptedException {
         AtomicInteger successCount = new AtomicInteger();
-        int numberOfExcute = 100;
+        int numberOfExecute = 100;
         ExecutorService service = Executors.newFixedThreadPool(10);
-        CountDownLatch latch = new CountDownLatch(numberOfExcute);
+        CountDownLatch latch = new CountDownLatch(numberOfExecute);
 
-        for (int i = 0; i < numberOfExcute; i++) {
+        for (int i = 0; i < numberOfExecute; i++) {
             service.execute(() -> {
                 try {
-                    humanService.decreaseMoney("조재영", 1000);
+                    homeService.decreasePrice("양옥", 1000);
                     successCount.getAndIncrement();
                     System.out.println("성공");
-                } catch (ObjectOptimisticLockingFailureException oe) {
-                    System.out.println("충돌감지");
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    System.out.println(e);
                 }
                 latch.countDown();
             });
         }
         latch.await();
 
-        assertThat(successCount.get()).isEqualTo(10);
+        assertThat(successCount.get()).isEqualTo(20);
     }
 }
 ```

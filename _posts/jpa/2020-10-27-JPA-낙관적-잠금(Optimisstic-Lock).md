@@ -5,11 +5,11 @@ categories:
   - jpa
 tags:
   - jpa
-  - optimisstic lock
+  - optimistic lock
 comments: true
 ---
 
-###  낙관적 잠금(Optimisstic Lock) 이란?
+###  낙관적 잠금(Optimistic Lock) 이란?
  - 비선점 잠금이라고 불리기도 함
  - 현실적으로 대부분의 트랜잭션이 충돌이 발생하지 않는다고 낙관적으로 가정하고 잠금
  - 트랜잭션을 커밋하기 전까지는 트랜잭션의 충돌을 알 수 없음
@@ -116,11 +116,11 @@ public class HumanController {
 ```bash
 curl 'http://localhost:8080/human/decrease?name=%EC%A1%B0%EC%9E%AC%EC%98%81&money=1000' & curl 'http://localhost:8080/human/decrease?name=%EC%A1%B0%EC%9E%AC%EC%98%81&money=1000' & curl 'http://localhost:8080/human/decrease?name=%EC%A1%B0%EC%9E%AC%EC%98%81&money=1000' & curl 'http://localhost:8080/human/decrease?name=%EC%A1%B0%EC%9E%AC%EC%98%81&money=1000' & curl 'http://localhost:8080/human/decrease?name=%EC%A1%B0%EC%9E%AC%EC%98%81&money=1000'
 ```
- ![터미널에서 호출해보기](https://drive.google.com/uc?id=1Ccg6KJ2lFj1krdMuvZgTbTv-mY2qz5yC)  
+ ![터미널에서 호출해보기](/assets/images/JPA 낙관적 잠금(Optimisstic Lock)/0.png)  
 
  * 실행 결과
- ![콘솔 로그 보기](https://drive.google.com/uc?id=1emfKLBKnlRVfpcHUhVY3qTnUUxzYa1Y5)  
- ![디비 보기](https://drive.google.com/uc?id=1LbvWloFi3EmSVNZiYFtIs3E3RfdGCSW2)  
+ ![콘솔 로그 보기](/assets/images/JPA 낙관적 잠금(Optimisstic Lock)/1.png)  
+ ![디비 보기](/assets/images/JPA 낙관적 잠금(Optimisstic Lock)/2.png)  
  처음 `조재영` 의 값은 `10000원`을 가지고 있었다.  
  다섯번을 호출했으니 5천원이 남아있어야 되지만 남은돈은 `9000원`이다.  
  모든 트랜잭션이 동시에 10000원을 읽어서 1000을 뺐기때문에,  
@@ -164,7 +164,7 @@ _@Version을 사용하면 수정이 될 때 자동으로 버전을 상승시키�
 어찌보면 Lock을 건다기보다는 충돌감지에 가깝다_
 
 * 위에 했던 curl테스트 다시 진행 후의 콘솔로그
-![콘솔 로그 보기](https://drive.google.com/uc?id=1C8HUnZM1Tk93e18ivWyByQmJGgTRCHjq)  
+![콘솔 로그 보기](/assets/images/JPA 낙관적 잠금(Optimisstic Lock)/3.png)  
 결과를 보면 5번을 시도하였지만 한번만 성공하고 나머지는 `ObjectOptimisticLockingFailureException`을 발생켰다.
 
 * 하나만 성공한 이유  
@@ -249,6 +249,31 @@ version 값을 이용해 변경감지를 한다.
 class HumanServiceTest {
     @Autowired
     HumanService humanService;
+    
+    @Autowired
+    HumanRepository humanRepository;
+    
+    @Autowired
+    HomeRepository homeRepository;
+    
+    @BeforeEach
+    void beforeEach() {
+        Home home = Home.builder()
+                .name("home")
+                .address("address")
+                .price(1000)
+                .build();
+
+        homeRepository.save(home);
+
+        Human human = Human.builder()
+                .home(home)
+                .name("조재영")
+                .money(10000)
+                .birth(LocalDate.of(1991, 2, 26))
+                .build();
+        humanRepository.save(human);
+    }
 
     @Test
     @DisplayName("돈 줄여보기(멀티 스레드) 테스트")
